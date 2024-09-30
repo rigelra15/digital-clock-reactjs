@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from 'react'
-
-import Navbar from './components/Navbar'
-import './App.css'
-
 import { FaExpandAlt } from 'react-icons/fa'
 
 const API_KEY = 'f6abc1e217536661a5a54f743ad0937e'
 
-const App = () => {
+const Clock = () => {
 	const [location, setLocation] = useState('Unknown')
 	const [time, setTime] = useState(new Date())
-	const [formattedTime, setFormattedTime] = useState('00:00:00')
+	const [formattedTime, setFormattedTime] = useState('')
 	const [formattedDate, setFormattedDate] = useState('')
-
-	const [fullscreenClock, setFullscreenClock] = useState(false)
 
 	useEffect(() => {
 		const fetchLocation = async (lat, lon) => {
@@ -80,57 +74,24 @@ const App = () => {
 	}, [])
 
 	return (
-		<div
-			className={`${
-				fullscreenClock ? 'bg-[#007EA7]' : 'bg-white'
-			} h-screen transition-all duration-500 ease-in-out`}
-		>
-			<div
-				className={`transition-transform duration-500 ease-in-out ${
-					fullscreenClock ? '-translate-y-full' : 'translate-y-0'
-				}`}
-			>
-				<Navbar />
-			</div>
-			<div className="w-screen flex justify-center items-center mt-10">
-				<div className="flex flex-col px-20 w-full justify-center">
-					<div className="flex justify-between w-full">
-						<h1
-							className={`flex justify-start text-2xl font-jost ${
-								fullscreenClock ? 'opacity-0' : 'opacity-100'
-							} transition-all duration-500 ease-in-out`}
-						>
-							The time in <span className="underline mx-2"> {location} </span>{' '}
-							is now
-						</h1>
-						<button
-							className={`z-50 p-2 rounded-lg bg-[#80CED7] text-white hover:bg-[#003247] transition-all duration-500 ease-in-out ${
-								fullscreenClock ? 'fixed top-8 right-8' : ''
-							}`}
-							onClick={() => setFullscreenClock(!fullscreenClock)}
-						>
-							<FaExpandAlt size={28} />
-						</button>
-					</div>
-					<p
-						className={`flex justify-center items-center text-[350px] font-bold font-inter h-fit w-full transition-all duration-500 ease-in-out
-    ${fullscreenClock ? 'absolute inset-0 text-white' : 'relative text-black'}
-    ${fullscreenClock ? 'flex justify-center items-center h-screen' : 'mt-10'}`}
-					>
-						{formattedTime}
-					</p>
-
-					<p
-						className={`flex justify-end text-2xl font-jost ${
-							fullscreenClock ? 'opacity-0' : 'opacity-100'
-						} transition-all duration-500 ease-in-out`}
-					>
-						{formattedDate}
-					</p>
+		<div className="w-screen h-1/2 flex justify-center items-center mt-10">
+			<div className="flex flex-col px-20 w-fit">
+				<div className="flex justify-between w-full">
+					<h1 className="flex justify-start text-2xl">
+						The time in <span className="underline mx-1"> {location} </span> is
+						now
+					</h1>
+					<button className="p-2 rounded-lg bg-[#80CED7] text-white hover:bg-[#007EA7]">
+						<FaExpandAlt size={20} />
+					</button>
 				</div>
+				<p className="flex justify-center text-[250px] font-bold h-fit w-fit">
+					{formattedTime}
+				</p>
+				<p className="flex justify-end text-2xl">{formattedDate}</p>
 			</div>
 		</div>
 	)
 }
 
-export default App
+export default Clock
